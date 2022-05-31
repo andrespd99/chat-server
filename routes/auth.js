@@ -12,11 +12,15 @@ const {
 
 const {
     createUser,
-    logIn
+    logIn,
+    renewToken
 } = require('../controllers/auth');
 const {
     checkFields
 } = require('../middlewares/check-fields');
+const {
+    checkJWT
+} = require('../middlewares/check-jwt');
 
 
 const router = Router();
@@ -35,6 +39,11 @@ router.post('/', [
     check('password', 'password, which is required, is empty').not().isEmpty(),
     checkFields,
 ], logIn);
+
+// checkJWT
+router.get('/renew', [
+    checkJWT,
+], renewToken);
 
 
 module.exports = router;

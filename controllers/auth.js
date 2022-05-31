@@ -116,7 +116,32 @@ const logIn = async (req, res = response) => {
 
 };
 
+const renewToken = async (req, res = response) => {
+    const uid = req.uid;
+
+    try {
+
+        //Create JWT.
+        const token = await generateJWT(uid);
+
+        res.json({
+            ok: true,
+            uid: req.uid,
+            token
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Error in the server. Contact the administrator'
+        });
+    }
+
+};
+
 module.exports = {
     createUser,
-    logIn
+    logIn,
+    renewToken
 }
