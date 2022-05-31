@@ -11,7 +11,8 @@ const {
 } = require('express-validator');
 
 const {
-    createUser
+    createUser,
+    logIn
 } = require('../controllers/auth');
 const {
     checkFields
@@ -28,6 +29,12 @@ router.post('/new', [
     checkFields,
 ], createUser);
 
+router.post('/', [
+    check('email', 'email, which is required, is empty').not().isEmpty(),
+    check('email', 'Invalid email format').isEmail(),
+    check('password', 'password, which is required, is empty').not().isEmpty(),
+    checkFields,
+], logIn);
 
 
 module.exports = router;
