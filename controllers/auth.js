@@ -117,16 +117,21 @@ const logIn = async (req, res = response) => {
 };
 
 const renewToken = async (req, res = response) => {
-    const uid = req.uid;
 
     try {
+        //Get uid from request body.
+        const uid = req.uid;
 
         //Create JWT.
         const token = await generateJWT(uid);
 
+        //Get user from DB.
+        const user = await User.findById(uid);
+
+        //Return user and token in resolve body.
         res.json({
             ok: true,
-            uid: req.uid,
+            user,
             token
         })
 
