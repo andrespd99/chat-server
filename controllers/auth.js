@@ -24,7 +24,8 @@ const createUser = async (req, res = response) => {
         if (emailExists) {
             return res.status(400).json({
                 ok: false,
-                msg: 'This email is already registered'
+                msg: 'This email is already registered',
+                code: 'email-exists'
             });
         }
 
@@ -43,6 +44,8 @@ const createUser = async (req, res = response) => {
 
         res.json({
             ok: true,
+            msg: 'Sign in successful',
+            code: 'success',
             user,
             token
         })
@@ -132,14 +135,16 @@ const renewToken = async (req, res = response) => {
         res.json({
             ok: true,
             user,
-            token
+            token,
+            msg: 'Sign in successful',
+            code: 'success',
         })
 
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             ok: false,
-            msg: 'Error in the server. Contact the administrator'
+            msg: 'Error in the server. Contact the administrator',
         });
     }
 
