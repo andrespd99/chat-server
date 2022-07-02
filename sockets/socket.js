@@ -22,8 +22,18 @@ io.on('connection', client => {
         return client.disconnect();
     }
 
-    console.log('Client authenticated...');
+    // Client connected.
     onUserConnected(uid);
+
+    // Connect client to the room.
+    client.join(uid);
+
+    //Listen private-message event
+    client.on('private-message', data => {
+
+        io.to(data.to).emit('private-message', data);
+        // client.broadcast.to(data.to).emit('private-message', data);
+    });
 
     client.on('disconnect', () => {
         onUserDisconnected(uid);

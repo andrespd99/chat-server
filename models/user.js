@@ -30,7 +30,6 @@ UserSchema.method('toJSON', function () {
         __v,
         _id,
         password,
-        online,
         ...object
     } = this.toObject();
 
